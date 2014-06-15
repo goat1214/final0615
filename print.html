@@ -1,0 +1,176 @@
+<html>
+<head>
+    <title>VexFlow - HTML5 Music Engraving</title>
+    <link href='http://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT|Yanone+Kaffeesatz|Tangerine'
+    rel='stylesheet' type='text/css'>
+    <link href="style.css" media="screen" rel="Stylesheet" type="text/css" />
+
+    <!-- VexFlow Compiled Source -->
+    <script src="vexflow-min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+    <script src="http://www.vexflow.com/support/tabdiv-debug.js"></script>
+</head>
+
+<body>
+    <style type="text/css">
+      body {
+        background-image: url("./photo/printback.jpg"); 
+        text-align:center; padding:0px 0;
+      }
+    </style>
+    <div id='cssmenu'>
+      <ul>
+         <li class='active'><a href='./index.html'><span>Home</span></a></li>
+         <li class='has-sub'><a href='#'><span>Group</span></a>
+            <ul>
+               <li><a href='https://www.facebook.com/chunhsien.yu.12'><span>Chun-Hsien Yu</span></a></li>
+               <li><a href='https://www.facebook.com/profile.php?id=100002601063200&fref=ts'><span>You-Lin Tsou</span></a></li>
+               <li class='last'><a href='https://www.facebook.com/profile.php?id=100000119952936&fref=ts'><span>Yao-Hua Yang</span></a></li>
+            </ul>
+         </li>
+         <li class='last'><a href='http://webcontest.mirlab.org/team/152'><span>Contact</span></a></li>
+      </ul>
+    </div>  
+    <style type="text/css">
+        @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,300);
+        #cssmenu {
+          font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, Sans-Serif;
+          font-size: 10px;
+          line-height: 15px;
+          text-transform: uppercase;
+          text-align: left;
+        }
+        #cssmenu > ul {
+          width: auto;
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          background: #ffffff;
+          border: 1px solid #ece6e8;
+          border-bottom: 3px solid #d9ced2;
+          -webkit-border-radius: 2px;
+          -moz-border-radius: 2px;
+          -o-border-radius: 2px;
+          border-radius: 2px;
+        }
+        #cssmenu > ul li#responsive-tab {
+          display: none;
+          /* Hide for large screens */
+
+        }
+        #cssmenu > ul li {
+          display: inline-block;
+          *display: inline;
+          zoom: 1;
+        }
+        #cssmenu > ul li.right {
+          float: right;
+        }
+        #cssmenu > ul li.has-sub {
+          position: relative;
+        }
+        #cssmenu > ul li.has-sub:hover ul {
+          display: block;
+        }
+        #cssmenu > ul li.has-sub ul {
+          display: none;
+          width: 250px;
+          position: absolute;
+          margin: 0;
+          padding: 0;
+          list-style-type: none;
+          background: #ffffff;
+          border: 1px solid #ece6e8;
+          border-bottom: 3px solid #d9ced2;
+          border-top: 0 none;
+        }
+        #cssmenu > ul li.has-sub ul li {
+          display: block;
+        }
+        #cssmenu > ul li.has-sub > a {
+          background-image: url('./photo/caret.png');
+          background-repeat: no-repeat;
+          background-position: 90% -95%;
+        }
+        #cssmenu > ul li.has-sub > a.active,
+        #cssmenu > ul li.has-sub > a:hover {
+          background: #d80041 url('./photo/caret.png') no-repeat;
+          background-position: 90% 195%;
+        }
+        #cssmenu > ul li a {
+          display: block;
+          padding: 12px 24px 11px 24px;
+          text-decoration: none;
+          color: #747474;
+          text-shadow: 0px 1px 0px #fff;
+        }
+        #cssmenu > ul li a.active,
+        #cssmenu > ul li a:hover {
+          background: #d80041;
+          color: #fff;
+          text-shadow: 0px 1px 0px #000;
+        }
+        @media (max-width: 600px) {
+          #cssmenu > ul {
+            width: 100%;
+          }
+          #cssmenu > ul li#responsive-tab {
+            display: block;
+          }
+          #cssmenu > ul li#responsive-tab a {
+            background: url('./photo/menu.png') no-repeat;
+            background-position: 95% -35%;
+          }
+          #cssmenu > ul li#responsive-tab a:hover {
+            background-color: #d80041;
+            background-position: 95% 135%;
+          }
+          #cssmenu > ul li {
+            display: none;
+          }
+          #cssmenu > ul li.right {
+            float: none;
+          }
+          #cssmenu > ul li.has-sub {
+            position: relative;
+          }
+          #cssmenu > ul li.has-sub ul {
+            display: block;
+            position: static;
+            width: 100%;
+            background: #ffffff;
+            border: 0 none;
+          }
+          #cssmenu > ul li.has-sub ul li {
+            display: block !important;
+          }
+          #cssmenu > ul li.has-sub ul li a span {
+            display: block;
+            padding-left: 24px;
+          }
+          #cssmenu > ul li.has-sub > a {
+            background-image: none;
+          }
+        }
+        /* Make sure they show even if hidden in mobile view by JS */
+        @media (min-width: 600px) {
+          #cssmenu > ul > li.collapsed {
+            display: inline-block !important;
+            *display: inline;
+            zoom: 1;
+          }
+          #cssmenu > ul ul li.collapsed {
+            display: block !important;
+          }
+        }
+    </style>
+    <br><br><br><br><br>
+    <script>
+        words = window.localStorage.getItem("stave");
+        document.write('<div class="vex-tabdiv" ID = stave width=700 scale=0.9 editor="True" editor_width=640 editor_height=230>'+words+'</div>');	
+    </script>
+
+</body>
+</html>

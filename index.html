@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Web Piano</title>
+		<meta property="og:title" content="Plypp Piano">
+		<meta property="og:description" content="Play the piano online with Plypp Piano. Learn to play chords. Choose between different instruments. Built with HTML5, CSS3 and JavaScript. For Chrome.">
+		<meta property="og:image" content="http://plypp.net/img/icon_128.png">
+		<meta name="description" content="Play the piano online with Plypp Piano. Learn to play chords. Choose between different instruments. Built with HTML5, CSS3 and JavaScript. For Chrome.">
+		<meta name="google-site-verification" content="LuZi0Wiqb0hHhKnvd2pgIOZoVPE6X9T68HAJRgGzEqU">
+        <meta name="author" content="Jeremy Karlsson">
+        <link rel="stylesheet" href="data:text/css;base64,KntiYWNrZ3JvdW5kOiNmZmY7Y29sb3I6IzAwMH1pZnJhbWV7ZGlzcGxheTpub25lfQ==" media="print">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href='http://fonts.googleapis.com/css?family=Parisienne' rel='stylesheet' type='text/css'>
+		<script type="application/ld+json">
+			{
+			  "@context" : "http://schema.org",
+			  "@type" : "Product",
+			  "name" : "Plypp Piano",
+			  "image" : "http://plypp.net/img/icon_128.png",
+			  "description" : "Piano application for Google Chrome made in HTML5 with CSS3",
+			  "brand" : {
+			    "@type" : "Brand",
+			    "logo" : "http://vufuzi.se/img/logo.png",
+			    "name" : "Vufuzi"
+			  }
+			}
+		</script>
+	</head>
+	<body>
+		<div class="supportBrowsers">
+			<span>Tested working in:</span>
+			Chrome, Firefox, Safari
+		</div>
+		<div class="buttontop">
+			<a href="#">Mail</a>
+		</div>
+		<div id="loading">
+			<span id="load-notes">
+				<span id="num">0%</span>
+			</span>
+		</div>
+		<div class="chordMarkers"> 
+			<a class="c"></a>
+			<a class="cs"></a>
+			<a class="d"></a>
+			<a class="ds"></a>
+			<a class="e"></a>
+			<a class="f"></a>
+			<a class="fs"></a>
+			<a class="g"></a>
+			<a class="gs"></a>
+			<a class="a"></a>
+			<a class="as"></a>
+			<a class="b"></a>
+			<a class="c1"></a>
+			<a class="cs1"></a>
+			<a class="d1"></a>
+			<a class="ds1"></a>
+			<a class="e1"></a>
+			<a class="f1"></a>
+			<a class="fs1"></a>
+			<a class="g1"></a>
+			<a class="gs1"></a>
+			<a class="a1"></a>
+			<a class="as1"></a>
+			<a class="b1"></a>
+			<a class="c2"></a>
+		</div>
+		<br><br>
+		<div class="piano" role="main">
+			<div class="panel">
+				<div class="screen">
+					<div class="sound" id="voice">Grand Piano</div>
+					<br>
+					<label>
+							<select id="BEAT" name="beat" style="width: 60px">
+								<option value="def">拍子</option>
+								<option value="2_4">2/4</option>
+								<option value="3_4">3/4</option>
+								<option value="4_4">4/4</option>
+								<option value="6_8">6/8</option>
+							</select>
+					</label>　
+					<label>
+						<select id="SPEED" name="speed" style="width: 60px"> 
+							<option value="def">速度</option>
+							<option value="60">60</option>
+							<option value="70">70</option>
+							<option value="80">80</option>
+							<option value="90">90</option>
+							<option value="100">100</option>
+							<option value="110">110</option>
+							<option value="120">120</option>
+						</select>
+					</label>　
+					<label>
+					    <select id="TONE" name="tone">
+							<option value="def">調性</option>
+							<option value="C">C大調</option>
+							<option value="G">G大調</option>
+							<option value="D">D大調</option>
+							<option value="A">A大調</option>
+							<option value="E">E大調</option>
+							<option value="B">B大調</option>
+							<option value="F">F大調</option>
+							<option value="Bb">降B大調</option>
+							<option value="Eb">降E大調</option>
+							<option value="Ab">降A大調</option>
+							<option value="Db">降D大調</option>
+						</select>
+					</label>
+
+					<style type="text/css">
+						body, html {
+							background-image: url("./photo/background4.jpg"); text-align:center; padding:0px 0;
+						}
+						/* The CSS */
+						select {
+						    padding:3px;
+						    margin: 0;
+						    -webkit-border-radius:4px;
+						    -moz-border-radius:4px;
+						    border-radius:4px;
+						    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+						    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+						    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+						    background: #f8f8f8;
+						    color:#888;
+						    border:none;
+						    outline:none;
+						    display: inline-block;
+						    -webkit-appearance:none;
+						    -moz-appearance:none;
+						    appearance:none;
+						    cursor:pointer;
+						}
+						/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+						@media screen and (-webkit-min-device-pixel-ratio:0) {
+						    select {padding-right:18px}
+						}
+
+						label {position:relative}
+						label:after {
+						    content:'<>';
+						    font:11px "Consolas", monospace;
+						    color:#aaa;
+						    -webkit-transform:rotate(90deg);
+						    -moz-transform:rotate(90deg);
+						    -ms-transform:rotate(90deg);
+						    transform:rotate(90deg);
+						    right:8px; top:2px;
+						    padding:0 0 2px;
+						    border-bottom:1px solid #ddd;
+						    position:absolute;
+						    pointer-events:none;
+						}
+						label:before {
+						    content:'';
+						    right:6px; top:0px;
+						    width:20px; height:20px;
+						    background:#f8f8f8;
+						    position:absolute;
+						    pointer-events:none;
+						    display:block;
+						}
+					</style>
+					<br><br>
+
+					<input type="button" class="myButton" id="BUTTON" value="Record" onclick=record()>
+					<style type="text/css">
+						.myButton {
+							-moz-box-shadow: 0px 19px 14px -7px #276873;
+							-webkit-box-shadow: 0px 19px 14px -7px #276873;
+							box-shadow: 0px 19px 14px -7px #276873;
+							background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+							background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
+							background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
+							background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
+							background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
+							background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+							filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
+							background-color:#599bb3;
+							-moz-border-radius:8px;
+							-webkit-border-radius:8px;
+							border-radius:8px;
+							display:inline-block;
+							cursor:pointer;
+							color:#ffffff;
+							font-family:arial;
+							font-size:16px;
+							font-weight:bold;
+							padding:10px 30px;
+							text-decoration:none;
+							text-shadow:0px 1px 0px #3d768a;
+						}
+						.myButton:hover {
+							background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
+							background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
+							background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
+							background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
+							background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
+							background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+							filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
+							background-color:#408c99;
+						}
+						.myButton:active {
+							position:relative;
+							top:1px;
+						}
+					</style>
+
+				</div>
+			</div>
+
+			<div class="keySholder">
+				<div id="keyCS" class="keyS" onmouseup = mousefunction(68)><a>C#</a></div>
+				<div id="keyDS" class="keyS" onmouseup = mousefunction(70)><a>D#</a></div>
+				<div id="keyFS" class="keyS" onmouseup = mousefunction(72)><a>F#</a></div>
+				<div id="keyGS" class="keyS" onmouseup = mousefunction(74)><a>G#</a></div>
+				<div id="keyAS" class="keyS" onmouseup = mousefunction(75)><a>A#</a></div>
+				<div id="keyCS1" class="keyS" onmouseup = mousefunction(51)><a>C#</a></div>
+				<div id="keyDS1" class="keyS" onmouseup = mousefunction(52)><a>D#</a></div>
+				<div id="keyFS1" class="keyS" onmouseup = mousefunction(54)><a>F#</a></div>
+				<div id="keyGS1" class="keyS" onmouseup = mousefunction(55)><a>G#</a></div>
+				<div id="keyAS1" class="keyS" onmouseup = mousefunction(56)><a>A#</a></div>
+			</div>
+			<div class="keyHolder">
+				<div id="keyC" class="key"><a>B</a></div>
+				<div id="keyD" class="key"><a>C</a></div>
+				<div id="keyE" class="key"><a>D</a></div>
+				<div id="keyF" class="key"><a>E</a></div>
+				<div id="keyG" class="key"><a>F</a></div>
+				<div id="keyA" class="key"><a>G</a></div>
+				<div id="keyB" class="key"><a>A</a></div>
+				<div id="keyC1" class="key"><a>B</a></div>
+				<div id="keyD1" class="key"><a>C</a></div>
+				<div id="keyE1" class="key"><a>D</a></div>
+				<div id="keyF1" class="key"><a>E</a></div>
+				<div id="keyG1" class="key"><a>F</a></div>
+				<div id="keyA1" class="key"><a>G</a></div>
+				<div id="keyB1" class="key"><a>A</a></div>
+				<div id="keyC2" class="key"><a>B</a></div>
+			</div>
+			<div id="sound"></div>
+		</div>
+
+		<footer>
+			<div class="share">
+				<div id="fb-root"></div>
+				<div class="fb-like" data-send="true" data-href="https://www.facebook.com/plypp" data-layout="button_count" data-show-faces="false">
+				</div>
+				<a href="#" class="twitter-follow-button" data-show-count="false" data-lang="en">
+					Follow @web_piano
+				</a>
+				<div class="g-plusone"></div>
+			</div>
+			<br>
+            <h1>Web Piano</h1>
+            <p>Play the piano online with Web Piano. Learn to play chords.</p>
+            <p>Built with HTML5, CSS3 and JavaScript. For Chrome for better use.</p>
+            <br>
+			<a href="https://www.facebook.com/" title="Plypp on Facebook">
+				We on Facebook
+			</a>
+			<br>
+			Piano created by 
+			<a href="#" title="On Google+">
+				A
+			</a> | <a href="#">
+				B
+			</a> | <a href="#" title="mail">
+				C
+			</a>
+		</footer>
+		<script src="js/zepto.min.js"></script>
+		<script src="js/script.min.js"></script>
+		<script>
+		var store = 1000;
+		var music = new Array(store);	// 存1000個時間，每個時間最多彈十個音符
+		for(i = 0; i < store; i++){
+			music[i] = new Array(10);
+			for( j=0; j<10; j++) music[i][j] = 0;
+		}
+
+		var store_num = 0;	// 設定第幾時間
+		var same_num = 0;	// 設定同時間的第幾項
+		var time = 60;	// 設定多久時間為一單位
+		var recordstart = 0;
+		var key = 'C'; // 使用者選擇的key
+		var Speed = 120; // 樂曲速度
+		var tempo = 3; // 1: 2/4, 2: 3/4, 3: 4/4, 4: 6/8
+
+		var white = [90,88,67,86,66,78,77,81,87,69,82,84,89,85,73]; // 鍵盤白鍵keycodes
+		var black = [51,52,52,54,55,56,68,70,72,74,75];// 鍵盤黑鍵keycodes
+		var notes = new Array(400); // 按鍵keycodes對應音符
+		var notes_kinds = [":16",":8",":8",":q",":q",":qd",":qd",":h",":h",":h",":h",":hd",":hd",":hd",":hd",":w",":w",":w",":w",":w",":w",":w",":w"];
+		var sharp = ['C','G','D','A','E','B'];
+		
+		var iteration = 100;
+
+		var sexteen_num, current_sexteen_num = 0; // 一個小節應有幾個16分音符, 目前這小節有幾個16分音符
+		var sharp_or_flap, key; // 升(0)or降(1), 調性
+		var no_sharp_or_flap = new Array(), to_natural = new Array(); // 升or降的音, 要還原的音
+		var words_pointer =0;
+		var words = new Array(1000);
+		var sexteen_sequence;
+		var sequence_in_line = 0;
+		var notes_num=0;
+		var quiet;
+
+		notes[90] = "B/3";
+		notes[88] = "C/4";
+		notes[67] = "D/4";
+		notes[86] = "E/4";
+		notes[66] = "F/4";
+		notes[78] = "G/4";
+		notes[77] = "A/4";
+		notes[81] = "B/4";
+		notes[87] = "C/5";
+		notes[69] = "D/5";
+		notes[82] = "E/5";
+		notes[84] = "F/5";
+		notes[89] = "G/5";
+		notes[85] = "A/5";
+		notes[73] = "B/5";
+		notes[190] = "Bn/3"; // 白鍵+100 加上還原記號
+		notes[188] = "Cn/4";
+		notes[167] = "Dn/4";
+		notes[186] = "En/4";
+		notes[166] = "Fn/4";
+		notes[178] = "Gn/4";
+		notes[177] = "An/4";
+		notes[181] = "Bn/4";
+		notes[187] = "Cn/5";
+		notes[169] = "Dn/5";
+		notes[182] = "En/5";
+		notes[184] = "Fn/5";
+		notes[189] = "Gn/5";
+		notes[185] = "An/5";
+		notes[173] = "Bn/5";
+		notes[51] = "C#/5"; // 黑鍵defailt 升記號
+		notes[52] = "D#/5";
+		notes[54] = "F#/5";
+		notes[55] = "G#/5";
+		notes[56] = "A#/5";
+		notes[68] = "C#/4";
+		notes[70] = "D#/4";
+		notes[72] = "F#/4";
+		notes[74] = "G#/4";
+		notes[75] = "A#/4";
+		notes[151] = "D@/5"; // 黑鍵+100 降記號
+		notes[152] = "E@/5";
+		notes[154] = "G@/5";
+		notes[155] = "A@/5";
+		notes[156] = "B@/5";
+		notes[168] = "D@/4";
+		notes[170] = "E@/4";
+		notes[172] = "G@/4";
+		notes[174] = "A@/4";
+		notes[175] = "B@/4";
+
+		// 每x秒時間進入下一個時間
+		function store_num_func(){
+			console.log(store_num);
+			store_num++;
+			same_num = 0;
+			if(document.getElementById("BUTTON").value == "Stop")setTimeout(store_num_func,time);
+		}
+
+		// 偵測鍵盤，儲存在music裡面
+		function keyFunction(){
+			if(checkarray(white, event.keyCode)!=-1 || checkarray(black, event.keyCode) != -1){
+				music[store_num][same_num] = event.keyCode;
+				console.log("music = "+music[store_num][same_num]);
+				same_num++;
+			}
+		}
+		function mousefunction(mousekeycode){
+			if(checkarray(white, mousekeycode)!=-1 || checkarray(black, mousekeycode) != -1){
+				music[store_num][same_num] = mousekeycode;
+				console.log("music = "+music[store_num][same_num]);
+				same_num++;
+			}
+
+		}
+		function record(){
+			console.log(document.getElementById("BUTTON").value);
+			if(document.getElementById("BUTTON").value == "Record"){
+				for(i = 0; i < store; i++)for( j=0; j<10; j++) music[i][j] = 0;
+				store_num =0;
+				save_num =0;
+				
+				//讀入使用者設定
+				Speed = document.getElementById("SPEED").value;
+				key = document.getElementById("TONE").value;
+				beat = document.getElementById("BEAT").value;
+				
+				if(beat[0] == '2') tempo = 1;
+				else if(beat[0] == '3') tempo = 2;
+				else if(beat[0] == '4') tempo = 3;
+				else if(beat[0] == '6') tempo = 4;
+				
+				if(Speed == "def" || key == "def" || beat == "def") alert("請輸入拍子、拍速和調性!");
+				else{
+					recordstart = 1;
+					document.getElementById("BUTTON").value = "Stop";
+					store_num_func();
+					document.onkeydown=keyFunction;
+				}
+			}
+			else{
+				document.getElementById("BUTTON").value = "Record";
+				recordstart = 0;
+				makestave();
+				for(i = 0; i < store; i++)for( j=0; j<10; j++) music[i][j] = 0;
+				store_num =0;
+				save_num =0;
+			}
+		}
+
+		//target 是否在 array 裡
+		function checkarray(arr, target){
+			var index = 0;
+			for(index=0; index<arr.length; index++) if(arr[index] == target) return index;
+			return -1;
+		}
+
+		//arr2的所有element是否在arr1裡出現過
+		function checkarrayarray(arr, arr2){
+			var index = 0;
+			for(index=0; index<arr.length; index++){
+				for(index2=0; index2<arr2.length; index2++){
+					if(arr[index] == arr2[index2]) return index;
+				}
+			}
+			return -1;
+		}
+
+		//究竟音有多長
+		function check_tempo(number){
+			if(number == 1) return 1;
+			else if (number < 4) return 2;
+			else if (number < 6) return 4;
+			else if (number < 8) return 6;
+			else if (number < 12) return 8;
+			else if (number < 16) return 12;
+			else if (number < 20) return 16;
+			else return number;
+		}
+
+		//看看是否要換行or換小節
+		function notation(){
+			if(current_sexteen_num == sexteen_num){
+				words[words_pointer] += " | ";
+				current_sexteen_num = 0;
+				sequence_in_line += 1;
+				if(sequence_in_line==4){
+					words[words_pointer+1] = topic;
+					words_pointer+=2;
+					words[words_pointer] = "notes ";
+					sequence_in_line = 0;
+				}
+			}
+		}
+
+		//加入休止符們
+		function rest(){
+			while(quiet!=0){
+				console.log("rest "+quiet);
+				len = Math.round((quiet)/sixteen_sequence);
+				if(check_tempo(len)+current_sexteen_num > sexteen_num){
+					quiet = quiet-(sexteen_num-current_sexteen_num);
+					words[words_pointer] += notes_kinds[sexteen_num-current_sexteen_num-1];
+					current_sexteen_num += check_tempo(sexteen_num-current_sexteen_num);
+					words[words_pointer] += "##";
+					notation();
+				}
+				else{
+					quiet = 0;
+					words[words_pointer] += notes_kinds[len-1];
+					current_sexteen_num += check_tempo(len);
+					words[words_pointer] += "##";
+					notation();
+				}
+			}
+		}
+
+		function makestave(){
+			
+			words = new Array(1000);
+			words_pointer =0;
+			quiet = 0;
+			sequence_in_line = 0;
+			current_sexteen_num =0;
+			
+			
+			//升or降
+			if(checkarray(sharp,key)!=-1) sharp_or_flap = 0;
+			else sharp_or_flap = 1;
+			//有那些音符要升
+			if(sharp_or_flap == 0){
+				switch(key){
+					case "C":
+						break;
+					case "G":
+						no_sharp_or_flap = [72,54];
+						to_natural = [66,84];
+						break;
+					case "B":
+						no_sharp_or_flap = [72,54,51,68];
+						to_natural = [66,84,87,88];
+						break;
+					case "A":
+						no_sharp_or_flap = [72,54,51,68,55,74];
+						to_natural = [66,84,87,88,89,78];
+						break;
+					case "E":
+						no_sharp_or_flap = [72,54,51,68,55,74,52,68];
+						to_natural = [66,84,87,88,89,78,69,67];
+						break;
+					case "B":
+						no_sharp_or_flap = [72,54,51,68,55,74,52,68,56,75];
+						to_natural = [66,84,87,88,89,78,69,67,85,77];
+						break;
+					default:
+						break;
+				}
+			}
+			//有那些音符要降
+			else{
+				switch(key){
+					case "F":
+						no_sharp_or_flap = [56,75];
+						to_natural = [73,81];
+						break;
+					case "Bb":
+						no_sharp_or_flap = [56,75,52,68];
+						to_natural = [73,81,82,86];
+						break;
+					case "Eb":
+						no_sharp_or_flap = [56,75,52,70,55,74];
+						to_natural = [73,81,82,86,85,77];
+						break;
+					case "Ab":
+						no_sharp_or_flap = [56,75,52,70,55,74,51,68];
+						to_natural = [73,81,82,86,85,77,69,67];
+						break;
+					case "Db":
+						no_sharp_or_flap = [56,75,52,68,55,74,51,68,54,72];
+						to_natural = [73,81,82,86,85,77,69,67,89,78];
+						break;
+					default:
+						break;
+				}
+			}
+			
+			//一小節有幾個16分音符
+			if(tempo == 1) sexteen_num = 8;
+			else if (tempo == 3) sexteen_num = 16;
+			else sexteen_num = 12;
+			
+			//幾幾拍
+			switch(tempo){
+				case 1:
+					tempo = "2/4";
+					break;
+				case 2:
+					tempo = "3/4";
+					break;
+				case 3:
+					tempo = "4/4";
+					break;
+				case 4:
+					tempo = "6/8";
+					break;
+			}
+			
+			//把該升的升一升 該降的降一降 該還原的還原  
+			for( i=0; i<1000; i++){
+				for( j=0; j<10; j++){
+					index = checkarray(no_sharp_or_flap, music[i][j]);
+					if(index != -1) music[i][j] = to_natural[index]+(sharp_or_flap*100);
+					else if(checkarray(to_natural, music[i][j]) != -1) music[i][j] = music[i][j]+100;
+				}
+			}
+
+			//一個16分音符有幾個sequence
+			sixteen_sequence = Math.ceil((60.0*1000)/(Speed*80*4));
+			
+			console.log(Speed+","+sixteen_sequence);
+			topic = "tabstave notation=true tablature=false key="+key+" time="+tempo;
+			
+			//做樂譜
+			words[0] = "notes ";
+			for( i=0; i<store_num; i++){
+				if(music[i][0]!=0){
+					notes_num = 0;
+					quiet = 0;
+					for(k=0; k<10; k++){
+						if(music[i][k]!=0)notes_num++;
+						if(music[i+1][k]!=0)notes_num++;
+					}
+					if(notes_num == 1){//單音
+						note = music[i][0];
+						console.log("note"+note);
+						for( j=i+2; j<store_num-1; j++) if(music[j][0] != 0) break;
+						if(checkarray(music[j], note) == -1 || (checkarray(music[j], note) != -1 && checkarray(music[j+1], note) == -1)){ //短音
+							if( j-i>sixteen_sequence*4 && j-i>sixteen_sequence*8){
+								quiet = j-i+8;
+								j = i+8;
+							}
+							
+							console.log(Math.round((j-i)/sixteen_sequence)-1);
+							console.log(i);
+							
+							len = Math.round((j-i)/sixteen_sequence);
+							if(current_sexteen_num+check_tempo(len) > sexteen_num) len = sexteen_num-current_sexteen_num;
+							words[words_pointer] += notes_kinds[len-1];
+							current_sexteen_num += check_tempo(len);
+							
+							words[words_pointer] += notes[note];
+							notation();
+							
+							rest();
+							
+						}
+						else{//長音
+							for(; j<store_num; j++){
+								index = checkarray(music[j], note);
+								if( index == -1 || music[j][0] == 0) break;
+								else music[j] = [0,0,0,0,0,0,0,0,0,0];
+							}
+							
+							console.log(Math.round((j-i)/sixteen_sequence)-1);
+							console.log(i);
+							console.log(j);
+							
+							len = Math.round((j-i)/sixteen_sequence);
+							if(current_sexteen_num+check_tempo(len) > sexteen_num) len = sexteen_num-current_sexteen_num;
+							words[words_pointer] += notes_kinds[len-1];
+							current_sexteen_num += check_tempo(len);
+							words[words_pointer] += notes[note];
+							notation();
+							
+							for(quiet=j; quiet<store_num; j++) if( music[quiet][0] == 0) break;
+							i = quiet;
+							quiet = quiet-j;
+							rest();
+							
+						}
+					}
+					else{//和弦
+						note = new Array(notes_num);
+						m = 0;
+						for(k=0; k<10; k++){
+							if(music[i][k]!=0){
+								note[m] = music[i][k];
+								m++;
+							}
+							if(music[i+1][k]!=0){
+								note[m] = music[i+1][k];
+								m++;
+								music[i+1][k] = 0;
+							}
+						}
+						console.log("note"+note);
+						for( j=i+2; j<store_num-1; j++) if(music[j][0] != 0) break;
+						
+						console.log("chack"+checkarrayarray(music[j], note));
+						if(checkarrayarray(music[j], note) == -1 || (checkarrayarray(music[j], note) != -1 && checkarrayarray(music[j+1], note) == -1)){//短音
+							if( j-i>sixteen_sequence*4 && j-i>sixteen_sequence*8){
+								quiet = j-i+8;
+								j = i+8;
+							}
+							
+							console.log(Math.round((j-i)/sixteen_sequence)-1);
+							console.log(i);
+							
+							len = Math.round((j-i)/sixteen_sequence);
+							if(current_sexteen_num+check_tempo(len) > sexteen_num) len = sexteen_num-current_sexteen_num;
+							words[words_pointer] += notes_kinds[len-1];
+							current_sexteen_num += check_tempo(len);
+							
+							words[words_pointer] += "(";
+							for(k=0;k<notes_num-1;k++) words[words_pointer] += notes[note[k]]+".";
+							words[words_pointer] += notes[note[notes_num-1]]+")";
+							notation();
+							
+							rest();
+						}
+						else{//長音
+							for(; j<store_num; j++){
+								index = checkarrayarray(music[j], note);
+								if( index == -1 || music[j][0] == 0) break;
+								else music[j] = [0,0,0,0,0,0,0,0,0,0];
+							}
+							
+							console.log(Math.round((j-i)/sixteen_sequence)-1);
+							console.log(i);
+							console.log(j);
+							
+							words[words_pointer] += notes_kinds[Math.round((j-i)/sixteen_sequence)-1];
+							current_sexteen_num += check_tempo(Math.round((j-i)/sixteen_sequence));
+							words[words_pointer] += "(";
+							for(k=0;k<notes_num-1;k++) words[words_pointer] += notes[note[k]]+".";
+							words[words_pointer] += notes[note[notes_num-1]]+")";
+							notation();
+							
+							for(quiet=j; quiet<store_num; j++) if( music[quiet][0] == 0) break;
+							i = quiet;
+							quiet = quiet-j;
+							rest();
+						}
+					}
+				}
+			}
+			
+			//把剩下的時間補上休止符
+			if(current_sexteen_num < sexteen_num){
+				quiet = (sexteen_num-current_sexteen_num)*sixteen_sequence;
+				while(quiet!=0){
+					len = Math.round((quiet)/sixteen_sequence);
+					if(check_tempo(len)+current_sexteen_num > sexteen_num){
+						quiet = quiet-(sexteen_num-current_sexteen_num);
+						words[words_pointer] += notes_kinds[sexteen_num-current_sexteen_num-1];
+						current_sexteen_num += check_tempo(sexteen_num-current_sexteen_num);
+						words[words_pointer] += "##";
+						notation();
+					}
+					else{
+						quiet = 0;
+						words[words_pointer] += notes_kinds[len-1];
+						current_sexteen_num += check_tempo(len);
+						words[words_pointer] += "##";
+						words[words_pointer] += " =|=";
+					}
+				}
+			}
+			else 	words[words_pointer] += " =|=";
+								
+			print = topic;
+			for(i=0;i<=words_pointer;i++){
+				print = print+"\n"+ words[i];
+			}
+			console.log( print );
+			window.localStorage.setItem("stave", print);
+			window.open("print.html");
+			
+		}
+		</script>
+	</body>
+</html>

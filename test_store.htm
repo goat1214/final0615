@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=big5">
+</head>
+
+<body>
+
+<script>
+
+var music = new Array(1000);	// 存1000個時間，每個時間最多彈十個音符
+for(i = 0; i < 1000; i++)	music[i] = new Array(10);
+
+var store_num = 0;	// 設定第幾時間
+var same_num = 0;	// 設定同時間的第幾項
+var time = 3000;	// 設定多久時間為一單位
+
+
+// 每x秒時間進入下一個時間
+function store_num_func(){
+	console.log(store_num);
+	store_num++;
+	same_num = 0;
+	setTimeout(store_num_func,time);
+}
+
+
+// 偵測鍵盤，儲存在music裡面
+function keyFunction(){
+	music[store_num][same_num] = event.keyCode;
+	console.log("music = "+music[store_num][same_num]);
+	same_num++;
+
+}
+store_num_func();
+document.onkeydown=keyFunction;
+</script>
+
+
+</body>
+</html>
